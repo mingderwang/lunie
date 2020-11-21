@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PageFeatureNotAvailable shows a warning about a feature not being available 1`] = `
+<tmpage-stub
+  data-title="Feature Not Available"
+  emptysubtitle=""
+  emptytitle="No data"
+  loaderpath=""
+>
+  <featurenotavailable-stub
+    feature="spacetravel"
+  />
+</tmpage-stub>
+`;

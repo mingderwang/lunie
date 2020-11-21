@@ -1,0 +1,50 @@
+name: App Testing Workflow
+
+on:
+  pull_request:
+    branches:
+      - '*'
+    paths:
+      - 'app/**'
+env:
+  WORKING_DIRECTORY: ./app
+  VUE_APP_FIREBASE_CONFIG: ${{ secrets.VUE_APP_FIREBASE_CONFIG }}
+jobs:
+  test:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+      - name: NPM Install
+        uses: bahmutov/npm-install@v1
+      - name: Run Unit Tests and Submit Coverage
+        run: |
+          yarn test:unit --coverage
+          bash <(curl -s https://codecov.io/bash)
+        working-directory: ${{env.WORKING_DIRECTORY}}
+  lint:
+    name: Linter
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+      - name: NPM Install
+        uses: bahmutov/npm-install@v1
+      - name: Lint
+        run: yarn lint
+        working-directory: ${{env.WORKING_DIRECTORY}}
+  checkChangelog:
+    name: Changelog
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+      - name: Check Changelog
+        run: npx simsala check --pending-path ./app/changes

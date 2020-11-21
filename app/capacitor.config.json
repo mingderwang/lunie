@@ -1,0 +1,12 @@
+{
+  "appId": "org.lunie.lunie",
+  "appName": "Lunie",
+  "bundledWebRuntime": false,
+  "npmClient": "yarn",
+  "webDir": "dist",
+  "plugins": {
+    "PushNotifications": {
+      "presentationOptions": ["badge", "sound", "alert"]
+    }
+  }
+}

@@ -1,0 +1,69 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LiProposal has the expected html structure 1`] = `
+<div
+  class="li-proposal"
+>
+  <div
+    class="proposal-content"
+  >
+    <div>
+      <div
+        class="status-and-id"
+      >
+        <status-stub
+          status="[object Object]"
+        />
+      </div>
+       
+      <h3
+        class="title"
+      >
+        
+        A new test proposal
+      
+      </h3>
+    </div>
+     
+    <span
+      class="time"
+    >
+      in 50 years
+    </span>
+  </div>
+</div>
+`;
+
+exports[`LiProposal should survive the tally result not being present yet 1`] = `
+<div
+  class="li-proposal"
+>
+  <div
+    class="proposal-content"
+  >
+    <div>
+      <div
+        class="status-and-id"
+      >
+        <status-stub
+          status="[object Object]"
+        />
+      </div>
+       
+      <h3
+        class="title"
+      >
+        
+        A new test proposal
+      
+      </h3>
+    </div>
+     
+    <span
+      class="time"
+    >
+      in 50 years
+    </span>
+  </div>
+</div>
+`;

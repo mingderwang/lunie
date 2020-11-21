@@ -1,0 +1,72 @@
+version: '3.6'
+services:
+  lunieapi:
+    image: lunieapi:latest
+    container_name: lunieapi
+    restart: unless-stopped
+    secrets:
+    - HASURA_ADMIN_KEY
+    volumes:
+    - /logs:/var/www/server/logs
+    - caches:/var/www/server/caches
+    - ./firebaseCredentials.json:/var/www/server/firebaseCredentials.json
+    networks:
+       - general
+    logging:
+      driver: loki
+      options:
+        loki-url: "http://admin:${LOKI_PASSWORD}@monitoring.lunie.io:3100/loki/api/v1/push"
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          memory: 3.5G
+    environment:
+      - PORT=$PORT
+      - HASURA_URL=$HASURA_URL
+      - SENTRY_DSN=$SENTRY_DSN
+      - SCRIPT_RUNNER_ENDPOINT=$SCRIPT_RUNNER_ENDPOINT
+      - AUTHENTICATION_TOKEN=$AUTHENTICATION_TOKEN
+      - PEPIPOST_API_KEY=$PEPIPOST_API_KEY
+      - NODE_ENV=staging
+      - ENABLE_CACHE=true
+      - REDIS_URL=http://redis:6379
+      - EMONEY_EXCHANGE_API_RATES_ENDPOINT=https://api.exchangeratesapi.io/latest?
+      - EMONEY_API_MAINNET=https://api.e-money.com/v1/
+      - EMONEY_API_TESTNET=https://beta-api.e-money.com/v1/
+  caddy:
+    image: abiosoft/caddy:1.0.3-no-stats
+    depends_on:
+    - "lunieapi"
+    restart: on-failure
+    container_name: caddy
+    networks:
+       - general
+    deploy:
+      replicas: 1
+    ports:
+    - "80:80"
+    - "443:443"
+    - "9100:9100"
+    volumes:
+    - ./Caddyfile:/etc/Caddyfile
+    - ./caddy_certs:/root/.caddy
+  redis:
+    image: redis
+    container_name: redis
+    command: ["redis-server", "--appendonly", "yes"]
+    hostname: redis
+    networks:
+      - general
+    volumes:
+      - ./redis_data:/data
+secrets:
+  HASURA_ADMIN_KEY:
+    external: true
+volumes:
+  caddy_certs:
+  redis_data:
+  caches:
+networks:
+  general:
+

@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Undelegations should show unbonding validators 1`] = `
+<div
+  class="undelegations"
+>
+  <div
+    class="table-container"
+  >
+    <div>
+      <div
+        class="header-container"
+      >
+        <h1>
+          Unstaking
+        </h1>
+         
+        <div
+          class="buttons"
+        >
+          <!---->
+        </div>
+      </div>
+       
+      <tableundelegations-stub
+        undelegations="[object Object],[object Object],[object Object]"
+      />
+    </div>
+  </div>
+   
+  <modalwithdrawunstaked-stub />
+</div>
+`;

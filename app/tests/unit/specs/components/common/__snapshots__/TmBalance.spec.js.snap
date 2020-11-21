@@ -1,0 +1,293 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TmBalance do not show available atoms when the user has none in the first place 1`] = `
+<div
+  class="balance-header-container"
+>
+  <div
+    class="balance-header"
+  >
+    <div
+      class="header-container"
+    >
+      <h1>
+        Your Balances
+      </h1>
+       
+      <div
+        class="buttons"
+      >
+        <!---->
+         
+        <!---->
+         
+        <tmbtn-stub
+          class="send-button"
+          customclass=""
+          type="secondary"
+          value="Send"
+        />
+         
+        <tmbtn-stub
+          class="withdraw-rewards"
+          customclass=""
+          id="withdraw-btn"
+          value="Claim Rewards"
+        />
+         
+        <button
+          class="tutorial-button"
+        >
+          <span>
+            Need some tokens?
+          </span>
+        </button>
+         
+        <div
+          class="currency-selector"
+        >
+          <img
+            alt="USD currency"
+            class="currency-flag"
+            src="/img/icons/currencies/usd.png"
+          />
+           
+          <select>
+            <option
+              hidden="hidden"
+              value=""
+            >
+              
+              USD
+            
+            </option>
+             
+            <option
+              value="USD"
+            >
+              USD
+            </option>
+             
+            <option
+              value="EUR"
+            >
+              EUR
+            </option>
+             
+            <option
+              value="CAD"
+            >
+              CAD
+            </option>
+             
+            <option
+              value="GBP"
+            >
+              GBP
+            </option>
+             
+            <option
+              value="JPY"
+            >
+              JPY
+            </option>
+             
+            <option
+              value="CHF"
+            >
+              CHF
+            </option>
+             
+            <option
+              value="DKK"
+            >
+              DKK
+            </option>
+             
+            <option
+              value="NOK"
+            >
+              NOK
+            </option>
+             
+            <option
+              value="SEK"
+            >
+              SEK
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+     
+    <!---->
+     
+    <tablebalances-stub
+      balances="[object Object]"
+      totalrewardsperdenom="[object Object]"
+    />
+     
+    <sendmodal-stub
+      denoms="MUON"
+    />
+     
+    <modalwithdrawrewards-stub />
+     
+    <delegationmodal-stub
+      targetvalidator="[object Object]"
+    />
+     
+    <undelegationmodal-stub
+      sourcevalidator="[object Object]"
+    />
+     
+    <!---->
+  </div>
+</div>
+`;
+
+exports[`TmBalance show the balance header when signed in 1`] = `
+<div
+  class="balance-header-container"
+>
+  <div
+    class="balance-header"
+  >
+    <div
+      class="header-container"
+    >
+      <h1>
+        Your Balances
+      </h1>
+       
+      <div
+        class="buttons"
+      >
+        <!---->
+         
+        <!---->
+         
+        <tmbtn-stub
+          class="send-button"
+          customclass=""
+          type="secondary"
+          value="Send"
+        />
+         
+        <tmbtn-stub
+          class="withdraw-rewards"
+          customclass=""
+          id="withdraw-btn"
+          value="Claim Rewards"
+        />
+         
+        <button
+          class="tutorial-button"
+        >
+          <span>
+            Need some tokens?
+          </span>
+        </button>
+         
+        <div
+          class="currency-selector"
+        >
+          <img
+            alt="USD currency"
+            class="currency-flag"
+            src="/img/icons/currencies/usd.png"
+          />
+           
+          <select>
+            <option
+              hidden="hidden"
+              value=""
+            >
+              
+              USD
+            
+            </option>
+             
+            <option
+              value="USD"
+            >
+              USD
+            </option>
+             
+            <option
+              value="EUR"
+            >
+              EUR
+            </option>
+             
+            <option
+              value="CAD"
+            >
+              CAD
+            </option>
+             
+            <option
+              value="GBP"
+            >
+              GBP
+            </option>
+             
+            <option
+              value="JPY"
+            >
+              JPY
+            </option>
+             
+            <option
+              value="CHF"
+            >
+              CHF
+            </option>
+             
+            <option
+              value="DKK"
+            >
+              DKK
+            </option>
+             
+            <option
+              value="NOK"
+            >
+              NOK
+            </option>
+             
+            <option
+              value="SEK"
+            >
+              SEK
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+     
+    <!---->
+     
+    <tablebalances-stub
+      balances="[object Object],[object Object]"
+      totalrewardsperdenom="[object Object]"
+    />
+     
+    <sendmodal-stub
+      denoms="MUON,MUON_2"
+    />
+     
+    <modalwithdrawrewards-stub />
+     
+    <delegationmodal-stub
+      targetvalidator="[object Object]"
+    />
+     
+    <undelegationmodal-stub
+      sourcevalidator="[object Object]"
+    />
+     
+    <!---->
+  </div>
+</div>
+`;

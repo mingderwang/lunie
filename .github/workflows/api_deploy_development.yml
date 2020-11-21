@@ -1,0 +1,52 @@
+name: API Development Deployment Workflow
+
+on:
+  push:
+    branches:
+      - 'develop'
+    paths:
+      - 'api/**'
+env:
+  WORKING_DIRECTORY: ./api
+  HASURA_URL: "http://178.128.234.2:8080/v1/graphql"
+  HASURA_ADMIN_KEY: ${{ secrets.LUNIE_STAGING_DB_KEY }}
+  SENTRY_DSN: ${{ secrets.SENTRY_DSN_API_STAGING }}
+  SCRIPT_RUNNER_ENDPOINT: ${{ secrets.SCRIPT_RUNNER_ENDPOINT }}
+jobs:
+  test:
+    name: Compile
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+    - name: Setup Node.js
+      uses: actions/setup-node@v1
+    - name: NPM Install
+      uses: bahmutov/npm-install@v1
+    - name: Build Docker Image
+      run: docker build -t lunieapi . 
+      working-directory: ${{env.WORKING_DIRECTORY}}
+    - name: Save and GZIP
+      run: docker save lunieapi | gzip > lunieapi.tgz
+      working-directory: ${{env.WORKING_DIRECTORY}}
+    - name: Copy Files
+      uses: appleboy/scp-action@master
+      with:
+        source: "api/lunieapi.tgz,api/docker-compose.yml,api/Caddyfile"
+        strip_components: 1 # remove the api folder
+        target: "/root/"
+        host: ${{ secrets.HOST_STAGING }}
+        username: root
+        key: ${{ secrets.SSH_KEY_STAGING }}
+    - name: Deploy Development API
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST_STAGING }}
+        username: root
+        key: ${{ secrets.SSH_KEY_STAGING }}
+        envs: HASURA_URL,HASURA_ADMIN_KEY,SENTRY_DSN,SCRIPT_RUNNER_ENDPOINT
+        script: |
+          docker image prune -a -f
+          docker load < lunieapi.tgz
+          PEPIPOST_API_KEY=${{secrets.PEPIPOST_API_KEY}} AUTHENTICATION_TOKEN=${{ secrets.AUTHENTICATION_TOKEN }} LOKI_PASSWORD=${{ secrets.LOKI_PASSWORD }} SENTRY_DSN=${{ secrets.SENTRY_DSN_API_STAGING }} SCRIPT_RUNNER_ENDPOINT=${{ secrets.SCRIPT_RUNNER_ENDPOINT }} docker stack deploy -c docker-compose.yml lunieapi
+          PEPIPOST_API_KEY=${{secrets.PEPIPOST_API_KEY}} AUTHENTICATION_TOKEN=${{ secrets.AUTHENTICATION_TOKEN }} LOKI_PASSWORD=${{ secrets.LOKI_PASSWORD }} SENTRY_DSN=${{ secrets.SENTRY_DSN_API_STAGING }} SCRIPT_RUNNER_ENDPOINT=${{ secrets.SCRIPT_RUNNER_ENDPOINT }} docker service update --image lunieapi:latest --force lunieapi_lunieapi

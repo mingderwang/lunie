@@ -1,0 +1,69 @@
+{
+  "name": "api",
+  "version": "1.0.59",
+  "description": "GraphQL API for Lunie.io",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luniehq/lunie-api.git"
+  },
+  "main": "index.js",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development nodemon index.js",
+    "dev-cache": "cross-env NODE_ENV=development ENABLE_CACHE=true nodemon index.js",
+    "dev-docker": "docker build -t lunie-api-dev . && docker run --init -it -p 4000:4000 lunie-api-dev",
+    "build": "docker build . -t lunieapi",
+    "lint": "eslint index.js config.js lib tests",
+    "lint-fix": "yarn lint --fix",
+    "start": "node --max-old-space-size=3500 index.js",
+    "test:unit": "cross-env TEST=true jest",
+    "changelog": "simsala log --pending-path ./changes"
+  },
+  "husky": {
+    "hooks": {
+      "pre-push": "yarn lint"
+    }
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "caches/*"
+    ]
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@hapi/joi": "^17.1.1",
+    "@polkadot/api": "^2.3.1",
+    "@polkassembly/util": "^0.2.0",
+    "@sentry/node": "^5.27.3",
+    "apollo-datasource-rest": "^0.9.3",
+    "apollo-server": "^2.18.2",
+    "apollo-server-cache-redis": "^1.2.2",
+    "apollo-server-plugin-response-cache": "^0.5.2",
+    "bech32": "^1.1.4",
+    "bignumber.js": "^9.0.0",
+    "coingecko-api": "^1.0.10",
+    "dotenv": "^8.2.0",
+    "firebase-admin": "^9.3.0",
+    "graphql": "^15.3.0",
+    "graphql-redis-subscriptions": "^2.2.1",
+    "lodash": "^4.17.20"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.2",
+    "eslint": "^7.1.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "husky": "^4.2.5",
+    "jest": "^26.5.3",
+    "node-fetch": "^2.6.1",
+    "nodemon": "^2.0.6",
+    "prettier": "^2.1.2",
+    "simsala": "^0.0.23"
+  },
+  "resolutions": {
+    "yargs-parser": ">=18.1.2",
+    "minimist": ">=1.2.3",
+    "kind-of": ">=6.0.3",
+    "acorn": ">=7.1.1"
+  }
+}
